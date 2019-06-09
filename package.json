@@ -7,7 +7,7 @@
     "start": "node server.js",
     "watch": "nodemon server.js",
     "lint": "eslint \"**/*.js\"",
-    "flushdb": "psql -d booksappv2 -f ./data/schema.sql"
+    "flushdb": "psql -d booksappv2 -f ./data/pg/schema.sql"
   },
   "keywords": [],
   "author": "Code Fellows, LLC",
