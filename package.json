@@ -6,7 +6,8 @@
   "scripts": {
     "start": "node server.js",
     "watch": "nodemon server.js",
-    "lint": "eslint \"**/*.js\""
+    "lint": "eslint \"**/*.js\"",
+    "flushdb": "psql -d booksappv2 -f ./data/schema.sql"
   },
   "keywords": [],
   "author": "Code Fellows, LLC",
