@@ -10,10 +10,10 @@ const args = process.argv.slice(2);
 console.log(args);
 
 if(args[0] === 'mongo'){
-  db = require('./mongo.js');
+  db = require('../db/mongo.js');
   console.log('in mongo');
 }else{
-  db = require('./pg.js');
+  db = require('../db/pg.js');
   console.log('in pg');
 }
 
