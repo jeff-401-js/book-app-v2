@@ -60,6 +60,12 @@ function getBook(request, response, next) {
     .catch( next );
 }
 
+function updateBook(request, response, next){
+  book.put(request.params.id, request.body)
+    .then(response.redirect(`books/${request.params.id}`))
+    .catch( next );
+}
+
 function createSearch(request, response) {
   let url = 'https://www.googleapis.com/books/v1/volumes?q=';
 
@@ -76,20 +82,6 @@ function newSearch(request, response) {
   response.render('pages/searches/new');
 }
 
-function getBook(request, response) {
-  getBookshelves()
-    .then(shelves => {
-
-      let SQL = 'SELECT books.*, bookshelves.name FROM books INNER JOIN bookshelves on books.bookshelf_id=bookshelves.id WHERE books.id=$1;';
-      let values = [request.params.id];
-      client.query(SQL, values)
-        .then(result => {
-          console.log(shelves.rows)
-          response.render('pages/books/show', { book: result.rows[0], bookshelves: shelves.rows })
-        })
-        .catch(err => handleError(err, response));
-    })
-}
 
 function getBookshelves() {
   // let SQL = 'SELECT DISTINCT bookshelf FROM books ORDER BY bookshelf;';
