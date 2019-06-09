@@ -3,7 +3,7 @@
 
 // Application Dependencies
 const express = require('express');
-// const superagent = require('superagent');
+const superagent = require('superagent');
 const morgan = require('morgan');
 
 // Database Setup
@@ -33,6 +33,11 @@ app.use(morgan('dev'));
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
 
+function createBook(request, response, next){
+  book.post(request.body)
+    .then(response.redirect('/'))
+    .catch( next );
+}
 
 function getBooks(request, response, next) {
   book.get()
@@ -42,6 +47,15 @@ function getBooks(request, response, next) {
       }else{
         response.render('pages/index', {books: data})
       }
+    })
+    .catch( next );
+}
+
+function getBook(request, response, next) {
+  let id = [request.params.id];
+  book.get(id)
+    .then(data => {
+      response.render('pages/books/show', {book: data[0], bookshelves: data})
     })
     .catch( next );
 }
@@ -105,20 +119,6 @@ function createShelf(shelf) {
     })
 }
 
-function createBook(request, response) {
-  console.log(request.body.bookshelf);
-  createShelf(request.body.bookshelf)
-    .then(id => {
-      let { title, author, isbn, image_url, description } = request.body;
-      let SQL = 'INSERT INTO books(title, author, isbn, image_url, description, bookshelf_id) VALUES($1, $2, $3, $4, $5, $6) RETURNING id;';
-      let values = [title, author, isbn, image_url, description, id];
-
-      client.query(SQL, values)
-        .then(result => response.redirect(`/books/${result.rows[0].id}`))
-        .catch(err => handleError(err, response));
-    })
-
-}
 
 function updateBook(request, response) {
   let { title, author, isbn, image_url, description, bookshelf_id } = request.body;
