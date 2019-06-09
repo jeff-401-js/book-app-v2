@@ -66,6 +66,13 @@ function updateBook(request, response, next){
     .catch( next );
 }
 
+function deleteBook(request, response, next){
+  let id = [request.params.id];
+  book.delete(id)
+    .then(response.redirect('/'))
+    .catch( next );
+}
+
 function createSearch(request, response) {
   let url = 'https://www.googleapis.com/books/v1/volumes?q=';
 
