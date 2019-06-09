@@ -20,6 +20,7 @@ Jeff
 #### `.env` requirements
 * `PORT` - 3000
 * `MONGODB_URI` - mongodb://localhost:27017/bookAppV2
+* `DATABASE_URL` - postgres://<`name and password`>@localhost:5432/booksappv2
 
 #### Running the app
 * `nodemon index.js`
@@ -42,3 +43,6 @@ Jeff
 #### Tests
 * How do you run tests?
 npm test `filename.test.js`
+
+#### Start
+nodemon index.js `mongo` (to use mongodb) or `anything else` (to use postgress)
