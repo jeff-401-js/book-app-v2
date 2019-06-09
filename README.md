@@ -23,10 +23,21 @@ Jeff
 
 #### Running the app
 * `nodemon index.js`
-* Endpoint: `/api/v1/:model/`
-  * Either get or post to get all or add one.
-* Endpoint: `//api/v1/:model/:id/`
-  * Either get, put or delete to get one, update one or delete one.
+* Endpoint: GET`'/'`
+  * Show all.
+* Endpoint: POST`'/searches'`
+  * Create search.
+* Endpoint: GET`'/searches/new'`
+  * New search
+* Endpoint: GET`'/books/:id'`
+  * Get certain book
+* Endpoint: POST`'/books'`
+  * Create book
+* Endpoint: PUT`'/books/:id'`
+  * Update certain book
+* Endpoint: DELETE`'/books/:id'`
+  * Delete certain book
+
   
 #### Tests
 * How do you run tests?
