@@ -7,20 +7,41 @@ const express = require('express');
 const morgan = require('morgan');
 
 // Database Setup
-const client = new pg.Client(process.env.DATABASE_URL);
-client.connect();
-client.on('error', err => console.error(err));
+require('dotenv').config();
+const mongoose = require('mongoose');
 
+const mongooseOptions = {
+  useNewUrlParser:true,
+  useCreateIndex: true,
+};
+
+mongoose.connect(process.env.MONGODB_URI, mongooseOptions);
+
+
+//Models
+const Book = require('../data/mongo/book-model.js');
+const book = new Book();
+
+// const Bookshelves = require('./data/mongo/bookshelves-model.js');
+// const bookshelf = new Bookshelves();
+
+// Prepare the express app
+const app = express();
+
+app.use(morgan('dev'));
+
+app.use(express.json());
+app.use(express.urlencoded({extended:true}));
 
 
 function getBooks(request, response, next) {
-  books.get()
+  book.get()
     .then( data => {
-      const output = {
-        count: data.length,
-        results: data,
-      };
-      response.status(200).json(output);
+      if(data.length === 0){
+        response.render('pages/searches/new');
+      }else{
+        response.render('pages/index', {books: data})
+      }
     })
     .catch( next );
 }
