@@ -33,6 +33,17 @@ app.use(morgan('dev'));
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
 
+// HELPER FUNCTIONS
+function Book(info) {
+  const placeholderImage = 'https://i.imgur.com/J5LVHEL.jpg';
+
+  this.title = info.title ? info.title : 'No title available';
+  this.author = info.authors ? info.authors[0] : 'No author available';
+  this.isbn = info.industryIdentifiers ? `ISBN_13 ${info.industryIdentifiers[0].identifier}` : 'No ISBN available';
+  this.image_url = info.imageLinks ? info.imageLinks.smallThumbnail : placeholderImage;
+  this.description = info.description ? info.description : 'No description available';
+}
+
 
 function createBook(request, response, next){
   book.post(request.body)
@@ -41,12 +52,12 @@ function createBook(request, response, next){
 }
 
 function getBooks(request, response, next) {
-  book.get()
+  book.find({})
     .then( data => {
-      if(data.length === 0){
-        response.render('pages/searches/new');
+      if(data.length){
+        response.render('pages/index', {books: data});
       }else{
-        response.render('pages/index', {books: data})
+        response.render('pages/searches/new');
       }
     })
     .catch( next );
@@ -62,7 +73,7 @@ function getBook(request, response, next) {
 }
 
 function updateBook(request, response, next){
-  book.put(request.params.id, request.body)
+  book.findByIdAndUpdate(request.params.id, request.body)
     .then(response.redirect(`books/${request.params.id}`))
     .catch( next );
 }

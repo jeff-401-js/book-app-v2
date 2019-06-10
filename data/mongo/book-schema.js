@@ -9,6 +9,7 @@ const books = mongoose.Schema({
   isbn: {type:String, required:true},
   image_url: {type:String, required:false},
   description: {type:String, required:false},
+  bookshelf_id: {type: String}
 },{toObject:{virtuals:true}, toJSON:{virtuals:true}, id:false});
 
 books.virtual('bookshelves', {
