@@ -19,10 +19,10 @@ mongoose.connect(process.env.MONGODB_URI, mongooseOptions);
 
 
 //Models
-const Book = require('../data/mongo/book-model.js');
-const book = new Book();
+const book = require('../data/mongo/book-model.js');
+// const book = new Book();
 
-// const Bookshelves = require('./data/mongo/bookshelves-model.js');
+// const bookshelves = require('./data/mongo/bookshelves-model.js');
 // const bookshelf = new Bookshelves();
 
 // Prepare the express app
@@ -117,7 +117,6 @@ function createSearch(request, response) {
 //       }
 //     })
 // }
-
 
 function handleError(error, response) {
   response.render('pages/error', { error: error });
