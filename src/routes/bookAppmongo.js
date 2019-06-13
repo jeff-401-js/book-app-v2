@@ -3,7 +3,7 @@
 // Application Dependencies
 const superagent = require('superagent');
 const express = require('express');
-const appRouter = express.Router();
+const router = express.Router();
 const book = require('../models/books.js');
 const bookshelves = require('../models/bookshelves.js');
 
@@ -19,13 +19,13 @@ const mongooseOptions = {
 mongoose.connect(process.env.MONGODB_URI, mongooseOptions);
 
 // API Routes
-appRouter.get('/', getBooks);
-appRouter.post('/searches', createSearch);
-appRouter.get('/searches/new', newSearch);
-appRouter.get('/books/:id', getBook);
-appRouter.post('/books', createBook);
-appRouter.put('/books/:id', updateBook);
-appRouter.delete('/books/:id', deleteBook);
+router.get('/', getBooks);
+router.post('/searches', createSearch);
+router.get('/searches/new', newSearch);
+router.get('/books/:id', getBook);
+router.post('/books', createBook);
+router.put('/books/:id', updateBook);
+router.delete('/books/:id', deleteBook);
 
 // HELPER FUNCTIONS
 function Book(info) {
@@ -74,7 +74,7 @@ function getBook(request, response, next) {
 
 function updateBook(request, response, next){
   book.findByIdAndUpdate(request.params.id, request.body)
-    .then(response.redirect(`books/${request.params.id}`))
+    .then(response.redirect(`/books/${request.params.id}`))
     .catch( next );
 }
 
@@ -113,4 +113,4 @@ function handleError(error, response) {
   response.render('pages/error', { error: error });
 }
 
-module.exports = appRouter;
+module.exports = router;

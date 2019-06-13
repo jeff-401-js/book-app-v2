@@ -4,7 +4,7 @@
 // Application Dependencies
 const superagent = require('superagent');
 const express = require('express');
-const appRouter = express.Router();
+const router = express.Router();
 
 // Database Setup
 const pg = require('pg');
@@ -13,13 +13,13 @@ client.connect();
 client.on('error', err => console.error(err));
 
 // API Routes
-appRouter.get('/', getBooks);
-appRouter.post('/searches', createSearch);
-appRouter.get('/searches/new', newSearch);
-appRouter.get('/books/:id', getBook);
-appRouter.post('/books', createBook);
-appRouter.put('/books/:id', updateBook);
-appRouter.delete('/books/:id', deleteBook);
+router.get('/', getBooks);
+router.post('/searches', createSearch);
+router.get('/searches/new', newSearch);
+router.get('/books/:id', getBook);
+router.post('/books', createBook);
+router.put('/books/:id', updateBook);
+router.delete('/books/:id', deleteBook);
 
 // HELPER FUNCTIONS
 function Book(info) {
@@ -145,4 +145,4 @@ function handleError(error, response) {
   response.render('pages/error', { error: error });
 }
 
-module.exports = {getBooks, newSearch, createSearch, getBook, createBook, updateBook, deleteBook};
+module.exports = router;

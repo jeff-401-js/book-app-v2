@@ -10,13 +10,13 @@ const books = mongoose.Schema({
   image_url: {type:String},
   description: {type:String},
   bookshelf_id: {type: String}
-},{toObject:{virtuals:true}, toJSON:{virtuals:true}});
+},{ toObject:{virtuals:true}, toJSON:{virtuals:true}});
 
 books.virtual('bookshelf', {
   ref: 'bookshelves',
   localField: 'bookshelf_id',
   foreignField: '_id',
-  justOne: true,
+  justOne:true,
 });
 
 books.pre('find', function() {
