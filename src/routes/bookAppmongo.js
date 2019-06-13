@@ -4,7 +4,7 @@
 const superagent = require('superagent');
 const express = require('express');
 const appRouter = express.Router();
-const books = require('../models/books.js');
+const book = require('../models/books.js');
 const bookshelves = require('../models/bookshelves.js');
 
 // Database Setup
@@ -26,18 +26,6 @@ appRouter.get('/books/:id', getBook);
 appRouter.post('/books', createBook);
 appRouter.put('/books/:id', updateBook);
 appRouter.delete('/books/:id', deleteBook);
-// const book = new Book();
-
-// const bookshelves = require('./data/mongo/bookshelves-model.js');
-// const bookshelf = new Bookshelves();
-
-// Prepare the express app
-const app = express();
-
-app.use(morgan('dev'));
-
-app.use(express.json());
-app.use(express.urlencoded({extended:true}));
 
 // HELPER FUNCTIONS
 function Book(info) {
@@ -52,9 +40,15 @@ function Book(info) {
 
 
 function createBook(request, response, next){
-  book.post(request.body)
-    .then(response.redirect('/'))
-    .catch( next );
+  createShelf(request.body.bookshelf)
+    .then(data => {
+      let record = request.body;
+      record.bookshelf_id = data._id;
+      let newBook = new book(record);
+      newBook.save()
+        .then(result => response.redirect(`/books/${result._id}`))
+        .catch( next );
+    })
 }
 
 function getBooks(request, response, next) {
@@ -70,10 +64,10 @@ function getBooks(request, response, next) {
 }
 
 function getBook(request, response, next) {
-  let id = [request.params.id];
-  book.get(id)
+  book.findById(request.params.id)
     .then(data => {
-      response.render('pages/books/show', {book: data[0], bookshelves: data})
+      return bookshelves.find()
+        .then(results => response.render('pages/books/show', {book: data, bookshelves: results}))
     })
     .catch( next );
 }
@@ -85,14 +79,22 @@ function updateBook(request, response, next){
 }
 
 function deleteBook(request, response, next){
-  let id = [request.params.id];
-  book.delete(id)
+  book.findByIdAndDelete(request.params.id, request.body)
     .then(response.redirect('/'))
     .catch( next );
 }
 
 function newSearch(request, response) {
   response.render('pages/searches/new');
+}
+
+function createShelf(shelf){
+  let normalizedShelf = shelf.toLowerCase();
+  return bookshelves.findOneAndUpdate(
+    {bookshelf: normalizedShelf},
+    {bookshelf: normalizedShelf},
+    {upsert: true, new: true}
+  );
 }
 
 function createSearch(request, response) {
