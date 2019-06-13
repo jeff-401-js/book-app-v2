@@ -1,4 +1,3 @@
-
 DROP TABLE IF EXISTS books;
 DROP TABLE IF EXISTS bookshelves;
 
@@ -16,4 +15,3 @@ CREATE TABLE books (
   description TEXT,
   bookshelf_id INT REFERENCES bookshelves(id)
 );
-
