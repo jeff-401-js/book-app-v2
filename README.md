@@ -5,7 +5,7 @@ Book App V2
 Jeff
 
 ### Links and Resources
-* [submission PR](https://github.com/JeffLawrence1/book-app-v2/pull/1)
+* [submission PR](https://github.com/jeff-401-js/book-app-v2/pull/1)
 * [travis](https://www.travis-ci.com/jeff-401-js/book-app-v2)
 * [heroku-mongo](https://murmuring-sea-94133.herokuapp.com/)
 * [heroku-postgres](https://pacific-crag-89210.herokuapp.com/)
