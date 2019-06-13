@@ -109,36 +109,8 @@ function createSearch(request, response) {
     .catch(err => handleError(err, response));
 }
 
-// function getBookshelves() {
-//   // let SQL = 'SELECT DISTINCT bookshelf FROM books ORDER BY bookshelf;';
-//   let SQL = 'SELECT DISTINCT id, name FROM bookshelves ORDER BY name;';
-
-//   return client.query(SQL);
-// }
-
-// function createShelf(shelf) {
-//   let normalizedShelf = shelf.toLowerCase();
-//   let SQL1 = `SELECT id from bookshelves where name=$1;`;
-//   let values1 = [normalizedShelf];
-
-//   return client.query(SQL1, values1)
-//     .then(results => {
-//       if (results.rowCount) {
-//         return results.rows[0].id;
-//       } else {
-//         let INSERT = `INSERT INTO bookshelves(name) VALUES($1) RETURNING id;`;
-//         let insertValues = [shelf];
-
-//         return client.query(INSERT, insertValues)
-//           .then(results => {
-//             return results.rows[0].id;
-//           })
-//       }
-//     })
-// }
-
 function handleError(error, response) {
   response.render('pages/error', { error: error });
 }
 
-module.exports = {createBook, getBooks, getBook, updateBook, deleteBook, newSearch, createSearch};
+module.exports = appRouter;
