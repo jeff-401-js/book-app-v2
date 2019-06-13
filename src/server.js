@@ -9,7 +9,7 @@ const notFoundHandler = require('./middleware/404.js');
 const errorHandler = require('./middleware/500.js');
 
 const DB = process.env.DB || 'pg';
-const bookApp = require(`./routes/book-app-${DB}.js`);
+const bookApp = require(`./routes/bookApp${DB}.js`);
 
 // Application Setup
 const app = express();
