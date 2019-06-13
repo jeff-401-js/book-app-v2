@@ -8,7 +8,7 @@ const methodOverride = require('./middleware/methodOverride.js')
 const notFoundHandler = require('./middleware/404.js');
 const errorHandler = require('./middleware/500.js');
 
-const DB = process.env.DB_TOGGLE || 'pg';
+const DB = process.env.DB_TOGGLE || 'mongo';
 const bookApp = require(`./routes/bookApp${DB}.js`);
 
 // Application Setup
